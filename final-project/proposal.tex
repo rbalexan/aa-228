@@ -1,0 +1,48 @@
+\documentclass[]{article}
+%\usepackage[margin=1in,footskip=0.25in]{geometry}
+\usepackage{geometry}
+\geometry{top=0.5in, left=1in, right=1in, bottom=0.5in}
+\usepackage[parfill]{parskip}    		% Begin paragraphs with an empty line rather than an indent
+
+%opening
+\title{\textbf{\Large Airline Ticket Dynamic Pricing Using Reinforcement Learning}}
+\author{Group 117 - Final Project Proposal \\ Ross Alexander, Jonathan Ling}
+\date{October 4, 2019}
+
+\begin{document}
+
+\maketitle
+
+%\begin{abstract}
+%\end{abstract}
+
+Dynamic pricing in the airline industry demonstrates some of the most effective pricing schemes in business to maximize revenue based on customers' willingness to pay for particular goods at particular times. We propose to develop a dynamic pricing reinforcement learning algorithm to maximize revenue for a single flight with multiple customer segments. We suggest reinforcement learning as it is a model-free paradigm and thus less sensitive to unusual demand patterns, and because it is a relatively new approach to dynamic pricing for airlines.
+
+This is a decision-making problem under uncertainty that has two distinct perspectives - airline and customer. The airline must determine what prices to set without knowing the underlying stochastic demand functions of customers. In seeking to maximize revenue, the airline must balance the need to sell all their seats before the departure date with waiting until the last minute to sell their most expensive seats. The customer, in seeking to obtain a single ticket at the lowest cost, has the opportunity to learn from the advertised prices over time in order to estimate the best time to purchase a ticket, but must also purchase a ticket before all tickets are gone.
+
+We can characterize the problem from the airline's perspective as follows:
+\begin{itemize}
+  \item This problem has a discrete, finite-time horizon and a finite inventory (number of seats), where at each time step $t \in T = \{0,1,...,m\}$, a new price can be advertised and seats sold
+  \item A set of states, $s_t \in S = \{0,1,...,n\}$ corresponding to the number of seats remaining on the flight at each time step
+  \item A set of actions, $a(s_{t}) \in A = \{0,1,...,k\}$ corresponding to the array of prices that the airline can set, as a function of state and time
+  \item Transition probabilities, $P(s_{t+1} = s' | s_t = s, a_t = a)$ between states
+  \item A reward function, $r(s_t,a_t)$ specifying the revenue earned for taking action $a_t$ at $t$ when in state $s_t$
+\end{itemize}
+
+For customer demand, we can simulate their distributions with the following parameters:
+\begin{itemize}
+  \item Arrival rate of customers to a travel agency/website seeking a ticket, e.g., the number of new potential customers per day are drawn from a Poisson distribution $Pois(\lambda)$ with $\lambda=\lambda(t)=\alpha t+\beta$ linearly decreasing mean
+  \item Reservation price (maximum price that a customer will accept)
+  \item Willingness-to-pay curve, e.g., a sigmoid or logit distribution representing the probability of purchasing the ticket at the listed price with respect to the customer's reservation price (possibly with prior distributions over the parameters of the sigmoid distribution for willingness-to-pay)
+\end{itemize}
+
+In addition, to make the problem more realistic and extend the current literature, we will model pricing for three main customer segments, who will have their own characteristic arrival rate, reservation price, and willingness-to-pay curves, characterized by their purchase specification:
+\begin{enumerate}
+  \item One-way trip (e.g., business travelers)
+  \item Round trip with the return trip leg in $>$ 2 days (e.g., leisure travelers)
+  \item Round trip with the return trip leg in $\leq$ 2 days
+\end{enumerate}
+
+This will be relatively easy to integrate in the model, by letting the actions $a \in A$ be $3\times1$ vectors - i.e., the airline will be able to offer three prices to these three respective customer segments.
+
+\end{document}
