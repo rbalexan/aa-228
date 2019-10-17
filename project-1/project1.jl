@@ -1,13 +1,14 @@
 using LightGraphs
 using DataFrames
-using TikzGraphs
-using TikzPictures
+using GraphPlot
+using Compose
 using SpecialFunctions
 using CSV
 using Printf
 
 include("bayesianScore.jl")
 include("initializeExampleGraph.jl")
+include("initializeUnconnectedGraph.jl")
 include("initializeRandomGraph.jl")
 include("writeGraph.jl")
 
@@ -21,7 +22,7 @@ function compute(infile, outfile)
     # j ∈ 1:qi  - parental instantiation index
     # k ∈ 1:ri  - random variable value index
 
-    dataframe = CSV.read("data/" * infile)
+    dataframe = CSV.read("data/" * infile * ".csv")
     data = Matrix(dataframe)
     s, n = size(data)
     idx2names = Dict(i => names(dataframe)[i] for i in 1:n)
@@ -30,9 +31,11 @@ function compute(infile, outfile)
 
     # initialize graph
     graph = initializeExampleGraph()
+    #graph = initializeUnconnectedGraph(n)
     #graph = initializeRandomGraph(n,trunc(Int, rand()*n^1.5))
 
-    writeGraph(graph, idx2names, "graphs/" * outfile)
+    draw(SVG("graphs/" * outfile * ".svg", 16cm, 16cm), gplot(graph, nodesize=0.5))
+    writeGraph(graph, idx2names, "graphs/" * outfile * ".gph")
 
     global parents = Dict(i => sort(inneighbors(graph, i)) for i in 1:n)
     global q = [prod(r[parents[i]]) for i in 1:n]
