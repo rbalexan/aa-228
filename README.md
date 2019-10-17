@@ -1,4 +1,5 @@
 # aa-228
+
 my workspace for AA 228: decision making under uncertainty
 
 projects: [project 0](https://github.com/rbalexan/aa-228/tree/master/project-0) | [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) | [project 2](https://github.com/rbalexan/aa-228/tree/master/project-2) | [final project](https://github.com/rbalexan/aa-228/tree/master/final-project) 
@@ -9,7 +10,7 @@ sample submission file
 
 ###[project 1](https://github.com/rbalexan/aa-228/tree/master/project-1/project1.jl):
 
-> A maximum likelihood approach to Bayesian structure learning assuming a uniform graph prior and a uniform Dirichlet network parameter prior. For a given graph structure, a dataset is read, counted, and scored using the Bayesian scoring function. Algorithms for maximizing the Bayesian score using graph search have been implemented, which include both directed and partially-directed graph search.
+> A maximum likelihood approach to Bayesian structure learning assuming a uniform graph prior and a uniform Dirichlet network parameter prior (Bayesian Dirichlet equivalent uniform (BDeu) scoring). For a given graph structure, a dataset is read, counted, and scored using the Bayesian scoring function. Algorithms for maximizing the Bayesian score using graph search have been implemented, which include both directed and partially-directed graph search.
 
 - Bayesian score implementation ([`bayesianScore.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/bayesianScore.jl))
 - directed graph search algorithms:
