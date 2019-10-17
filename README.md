@@ -7,6 +7,18 @@ projects: [project 0](https://github.com/rbalexan/aa-228/tree/master/project-0) 
 
 sample submission file
 
+###[project 1](https://github.com/rbalexan/aa-228/tree/master/project-1/project1.jl):
+
+> A maximum likelihood approach to Bayesian structure learning assuming a uniform graph prior and a uniform Dirichlet network parameter prior. For a given graph structure, a dataset is read, counted, and scored using the Bayesian scoring function. Algorithms for maximizing the Bayesian score using graph search have been implemented, which include both directed and partially-directed graph search.
+
+- Bayesian score implementation ([`bayesianScore.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/bayesianScore.jl))
+- directed graph search algorithms:
+  - K2 search
+  - local search (with randomized restart through [`initializeRandomGraph.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/initializeRandomGraph.jl))
+- partially directed graph search algorithms:
+  - local search (with randomized restart)
+- additional documentation: [readme.pdf](https://github.com/rbalexan/aa-228/tree/master/project-1/doc/README.pdf)
+
 ### [final project](https://github.com/rbalexan/aa-228/tree/master/final-project):
 
 proposal:
