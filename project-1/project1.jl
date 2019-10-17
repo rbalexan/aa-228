@@ -25,101 +25,58 @@ end
 
 function compute(infile, outfile)
 
+    # s         - samples (rows)
+    # n         - random variables (columns)
+    # qi        - number of parental instantiations of Xi
+    # ri        - number of instantiations of Xi
+    # i ∈ 1:n   - random variable index
+    # j ∈ 1:qi  - parental instantiation index
+    # k ∈ 1:ri  - random variable value index
+
     dataframe = CSV.read("data/" * infile)
     data = Matrix(dataframe)
+    s, n = size(data)
+    idx2names = Dict(i => names(dataframe)[i] for i in 1:n)
 
-    # i 1:n  - random variables
-    # j 1:qi - instantiations of the parents
-    # k 1:ri - values of Xi
+    global r = [maximum(data[:, i]) for i in 1:n]
 
-    # m samples (rows), n random variables (columns)
-    m, n = size(data)
-
-    r = zeros(Int64, 1, n)
-    q = zeros(Int64, 1, n)
-    kDict = Dict()
-    parentsDict = Dict()
-    idx2NamesDict = Dict()
-
-    for i in 1:n
-
-        idx2NamesDict[i] = names(dataframe)[i]
-
-        uniqueInstantiations = unique(data[:, i])
-        # compute ri (number of unique instantiations of Xi)
-        global r[i] = size(uniqueInstantiations)[1]
-
-        # index k for each Xi (assign indices to each unique instantiation of Xi)
-        global kDict[i] = sort(uniqueInstantiations)
-
-    end
-
-    # initialize graph DiGraph (right now its equal to example
-    # later it will be based on search strategy)
+    # initialize graph
     graph = initializeExampleGraph()
-    #graph = initializeRandomGraph(n)
+    #graph = initializeRandomGraph(n,trunc(Int, rand()*n^1.5))
 
-    writeGraph(graph, idx2NamesDict, "graphs/" * outfile)
+    writeGraph(graph, idx2names, "graphs/" * outfile)
 
-    for i in 1:n
+    global parents = Dict(i => sort(inneighbors(graph, i)) for i in 1:n)
+    global q = [prod(r[parents[i]]) for i in 1:n]
+    global m = Dict()
 
-        # compute qi from graph structure
-        parents = sort(inneighbors(graph, i))
-
-        global parentsDict[i] = parents
-
-        prod = 1
-        for j = 1:length(parents)
-            ri = r[parents[j]]
-            prod *= ri
-        end
-
-        global q[i] = prod
-
-    end
-
-    global mDict = Dict()
-    global αDict = Dict()
-
-    # loop over all samples (rows)
-    for m in 1:m
-
-        # loop over all Xis
-        for i = 1:n
+    for s in 1:s        # loop over all samples (rows)
+        for i in 1:n     # loop over all Xis
 
             # look up value assignment of Xi (k)
-            k = data[m, i]
+            k = data[s, i]
 
-            if q[i] == 1
-            # if Xi has no parents, j is 1
+            if q[i] == 1    # if Xi has no parents
                 j = 1
-            else
+            else            # if Xi has parents
 
-                parents = parentsDict[i]
-                numParentalInstantiations = r[parents]
-                parentalInstantiationArray = LinearIndices(zeros(tuple(numParentalInstantiations...)))
+                # get sample values and number of possible instantiations of each parent
+                parentalValues = Tuple(data[s, parents[i]])
+                parentalInstantiations = Tuple(r[parents[i]])
 
-                parentalValues = data[m, parents]
+                j = LinearIndices(parentalInstantiations)[CartesianIndex(parentalValues)]
 
-                # indices = zeros((1, q[i]))
-                # for w in 1:q[i]
-                #     kValues = kDict(w)
-                #     global indices = findall(x->x==parentValues[w],kValues)
-                #
-                # j = parentalInstantiationArray[#k-index for parent 1]
-
-                # !!this is only if the values of all vars start at one go up from there (no skipping)
-                j = getindex(parentalInstantiationArray, parentalValues)[1]
             end
 
-            mDict[(i, j, k)] = get(mDict, (i, j, k), 0) + 1
+            # safely establish and increment mijk
+            m[(i, j, k)] = get(m, (i, j, k), 0) + 1
 
         end
-
     end
 
-    score = bayesianScore(n, q, r, mDict)
+    score = bayesianScore(n, q, r, m)
     @show score
+
     # between search iterations, mijk counts only change slightly
     # nodes with changes in parental structures
 
