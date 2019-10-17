@@ -7,6 +7,8 @@ using CSV
 using Printf
 
 include("bayesianScore.jl")
+include("initializeExampleGraph.jl")
+include("initializeRandomGraph.jl")
 
 """
     writeGraph(dag::DiGraph, idx2names, filename)
@@ -121,32 +123,6 @@ function compute(infile, outfile)
     # between search iterations, mijk counts only change slightly
     # nodes with changes in parental structures
 
-end
-
-function initializeExampleGraph()
-
-    # initialize our example directed graph, G
-
-    G = DiGraph(6)
-    add_edge!(G, 1, 2)
-    add_edge!(G, 3, 4)
-    add_edge!(G, 5, 6)
-
-    return G
-
-end
-
-function initializeRandomGraph(n)
-
-
-    # check is_cyclic
-
-    return G
-
-end
-
-if length(ARGS) != 2
-    error("usage: julia project1.jl <infile>.csv <outfile>.gph")
 end
 
 inputfilename = ARGS[1]
