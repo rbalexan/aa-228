@@ -117,7 +117,7 @@ function compute(infile, outfile)
     end
 
     score = bayesianScore(n, q, r, mDict)
-    print(score)
+    @show score
     # between search iterations, mijk counts only change slightly
     # nodes with changes in parental structures
 
