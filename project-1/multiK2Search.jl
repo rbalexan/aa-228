@@ -19,7 +19,7 @@ iterations  = parse(Int64, ARGS[1])
 infile      = ARGS[2]
 outfile     = ARGS[3]
 
-Random.seed!(1)
+Random.seed!(2)
 
 function multiK2Search(dataset, iterations)
 

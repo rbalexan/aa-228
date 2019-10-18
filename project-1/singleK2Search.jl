@@ -20,7 +20,7 @@ function singleK2Search(dataset)
         # generate the set of possible parents for the node
         validParents = filter(x->x≠i, nodeOrdering)
 
-        while length(inneighbors(graph, i)) < min(length(nodeOrdering) - 1, 10) # max parents
+        while length(inneighbors(graph, i)) < min(length(nodeOrdering) - 1, 8) # max parents
 
             # re/initialize possible graph scores
             graphScores = [-1.0E20 for i in 1:size(dataset)[2]]
@@ -59,7 +59,7 @@ function singleK2Search(dataset)
 
         end
 
-        #@show bestScore
+        @show bestScore
 
     end
 
