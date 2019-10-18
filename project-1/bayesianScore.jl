@@ -12,8 +12,9 @@ function bayesianScore(n, q, r, m::Dict)
         mij0 = 0
 
         for k in 1:r[i]
-            mij0 += get(m, (i, j, k), 0)
-            score += lgamma(1 + get(m, (i, j, k), 0))
+            mijk = get(m, (i, j, k), 0)
+            mij0 += mijk
+            score += lgamma(1 + mijk)
         end
 
         score += lgamma(αij0) - lgamma(αij0 + mij0)
