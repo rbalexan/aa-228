@@ -1,0 +1,14 @@
+age, sex
+portembarked, sex
+fare, passengerclass
+numparentschildren, age
+numparentschildren, sex
+passengerclass, age
+passengerclass, portembarked
+passengerclass, sex
+passengerclass, survived
+sex, survived
+numsiblings, age
+numsiblings, numparentschildren
+numsiblings, passengerclass
+numsiblings, sex
