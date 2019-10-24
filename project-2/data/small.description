@@ -1,0 +1,5 @@
+variable,mean,min,median,max,eltype
+s,50.74306,1,51.0,100,Int64
+a,2.50666,1,3.0,4,Int64
+r,0.15622,0,0.0,10,Int64
+sp,50.7382,1,51.0,100,Int64
