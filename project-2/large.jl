@@ -4,6 +4,7 @@ using Plots
 using Printf
 
 include("inferTransitionAndReward.jl")
+include("valueIteration.jl")
 
 # load the dataset
 dataset = CSV.read("data/large.csv")
@@ -16,3 +17,10 @@ dataset = CSV.read("data/large.csv")
 
 T, R = inferTransitionAndReward(dataset, 𝖲, 𝖠)
 
+γ = 0.95
+terminalStates = []#151313, 151202]
+reachableStateSpace = unique(dataset.s)
+reachableStates = (s) -> reachableStateSpace
+ϵ = 0.1
+
+U, π = valueIteration(           𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ)
