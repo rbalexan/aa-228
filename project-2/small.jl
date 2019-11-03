@@ -5,6 +5,7 @@ using Printf
 
 include("inferTransitionAndReward.jl")
 include("valueIteration.jl")
+include("writePolicy.jl")
 
 # load the dataset
 dataset = CSV.read("data/small.csv")
@@ -23,3 +24,13 @@ reachableStates = (s) -> filter(x -> (x >= 1 && x <= 100), [s, s+1, s-1, s+10, s
 ϵ = 0.01
 
 U, π = valueIteration(           𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ)
+
+writePolicy(π, "small")
+
+U = rotl90(reshape(U, (10, 10)))
+π = rotl90(reshape(π, (10, 10)))
+
+heatmap(reverse(U, dims=1), c=:viridis)
+heatmap(reverse(π, dims=1), c=:viridis)
+
+# left, right, up, down
