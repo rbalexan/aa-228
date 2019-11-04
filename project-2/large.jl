@@ -30,8 +30,10 @@ U, π = gaussSeidelValueIteration(𝖲, 𝖠, T, R, γ, terminalStates, reachabl
 
 writePolicy(π[1:312020], "large")
 
+gr()
 U = rotl90(reshape(U, (10000, 32)))
+heatmap(reverse(U[32 .- [15, 23, 27, 29, 30], sort(unique(mod.(uniqueStates, 10000)))], dims=1), c=:viridis, framestyle=:box, dpi=600)
+savefig("plots/large_U.png")
 π = rotl90(reshape(π, (10000, 32)))
-
-heatmap(reverse(U[32 .- [15, 23, 27, 29, 30], sort(unique(mod.(uniqueStates, 10000)))], dims=1), c=:viridis)
-heatmap(reverse(π[32 .- [15, 23, 27, 29, 30], sort(unique(mod.(uniqueStates, 10000)))], dims=1), c=:viridis)
+heatmap(reverse(π[32 .- [15, 23, 27, 29, 30], sort(unique(mod.(uniqueStates, 10000)))], dims=1), c=:viridis, framestyle=:box, dpi=600)
+savefig("help plots/large_π.png")

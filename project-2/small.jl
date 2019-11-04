@@ -29,10 +29,11 @@ U, π = gaussSeidelValueIteration(𝖲, 𝖠, T, R, γ, terminalStates, reachabl
 
 writePolicy(π, "small")
 
-U = rotl90(reshape(U, (10, 10)))
-π = rotl90(reshape(π, (10, 10)))
+gr()
+heatmap(reverse(rotl90(reshape(U, (10, 10))), dims=1), c=:viridis, framestyle=:box, dpi=600)
+savefig("plots/small_U.png")
+heatmap(reverse(rotl90(reshape(π, (10, 10))), dims=1), c=:viridis, framestyle=:box, dpi=600)
+savefig("plots/small_π.png")
 
-heatmap(reverse(U, dims=1), c=:viridis)
-heatmap(reverse(π, dims=1), c=:viridis)
 
 # left, right, up, down

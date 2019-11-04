@@ -30,8 +30,8 @@ U, π = gaussSeidelValueIteration(𝖲, 𝖠, T, R, γ, terminalStates, reachabl
 
 writePolicy(π, "medium")
 
-U = rotl90(reshape(U, (500, 100)))
-π = rotl90(reshape(π, (500, 100)))
-
-heatmap(reverse(U, dims=1), c=:viridis)
-heatmap(reverse(π, dims=1), c=:viridis)
+gr()
+heatmap(reverse(rotl90(reshape(U, (500, 100))), dims=1), c=:viridis, framestyle=:box, dpi=600)
+savefig("plots/medium_U.png")
+heatmap(reverse(rotl90(reshape(π, (500, 100))), dims=1), c=:viridis, framestyle=:box, dpi=600)
+savefig("plots/medium_π.png")
