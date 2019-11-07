@@ -5,7 +5,7 @@ using Printf
 
 include("inferTransitionAndReward.jl")
 include("valueIteration.jl")
-include("gaussSeidelValueIteration.jl")
+include("valueIterationGaussSeidel.jl")
 include("writePolicy.jl")
 
 # load the dataset
@@ -25,7 +25,7 @@ reachableStates = (s) -> filter(x -> (x >= 1 && x <= 100), [s, s+1, s-1, s+10, s
 ϵ = 0.01
 
 U, π = valueIteration(           𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ)
-U, π = gaussSeidelValueIteration(𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ)
+U, π = valueIterationGaussSeidel(𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ)
 
 writePolicy(π, "small")
 

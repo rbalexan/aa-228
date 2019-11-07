@@ -1,4 +1,4 @@
-function gaussSeidelValueIteration(𝖲::Int, 𝖠::Int, T::Dict, R::Dict, γ::Float64,
+function valueIterationGaussSeidel(𝖲::Int, 𝖠::Int, T::Dict, R::Dict, γ::Float64,
     terminalStates, reachableStates, ϵ=1, reachableStateSpace=1:𝖲)
 
     δ = ϵ*(1-γ)/γ
