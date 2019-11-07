@@ -1,5 +1,7 @@
-function valueIteration(𝖲::Int, 𝖠::Int, T::Dict, R::Dict, γ::Float64,
+function valueIteration(𝖲::Int, 𝖠::Int, dataset::DataFrame, γ::Float64,
     terminalStates, reachableStates, ϵ=1)
+
+    T, R = inferTransitionAndReward(dataset, 𝖲, 𝖠)
 
     δ = ϵ*(1-γ)/γ
     bellmanResidual = δ+1
