@@ -8,6 +8,10 @@ function sarsaLambdaLearning(𝖲::Int, 𝖠::Int, dataset::DataFrame,
     # loop over the dataset
     for i in 1:size(dataset)[1]
 
+        if mod(i, 1000) == 0
+            @show i
+        end
+
         # if we are at the end of an episode, reset the counts for next episode
         # and skip the last sarsa iteration
         if i == size(dataset)[1] || dataset.sp[i] ≠ dataset.s[i+1]
@@ -24,12 +28,9 @@ function sarsaLambdaLearning(𝖲::Int, 𝖠::Int, dataset::DataFrame,
         N[s, a] += 1
         δ       =  r + γ*Q[sp, ap] - Q[s, a]
 
-        for s in 1:𝖲, a in 1:𝖠
-
-            Q[s, a] += α*δ*N[s, a]
-            N[s, a] *= γ*λ
-
-        end
+        # for s in 1:𝖲, a in 1:𝖠
+        Q += α*δ*N
+        N *= γ*λ
 
     end
 

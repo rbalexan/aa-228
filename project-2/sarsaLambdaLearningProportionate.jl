@@ -27,14 +27,10 @@ function sarsaLambdaLearningProportionate(𝖲::Int, 𝖠::Int, dataset::DataFra
         Nd[s, a] += 1 # eligibility trace
         δ        =  r + γ*Q[sp, ap] - Q[s, a]
 
-        for s in 1:𝖲, a in 1:𝖠
-
-            if N[s, a] ≠ 0
-                Q[s, a]  += 1/N[s, a]*δ*Nd[s, a]
-            end
-            Nd[s, a] *= γ*λ
-
-        end
+        #for s in 1:𝖲, a in 1:𝖠
+        Q  += 1*δ./N.*Nd
+        replace!(Q, NaN=>0)
+        Nd *= γ*λ
 
     end
 

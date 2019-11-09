@@ -1,8 +1,9 @@
-function valueIterationGaussSeidel(𝖲::Int, 𝖠::Int, dataset::DataFrame,
-    γ::Float64, terminalStates, reachableStates, ϵ=1, reachableStateSpace=1:𝖲)
+function valueIterationGaussSeidel(𝖲::Int, 𝖠::Int, dataset::DataFrame, reachableStates,
+    γ::Float64, ϵ::Float64, reachableStateSpace=1:𝖲)
 
     T, R = inferTransitionAndReward(dataset, 𝖲, 𝖠)
 
+    # compute and show the Bellman residual
     δ = ϵ*(1-γ)/γ
     bellmanResidual = δ+1
     @show δ
@@ -14,6 +15,7 @@ function valueIterationGaussSeidel(𝖲::Int, 𝖠::Int, dataset::DataFrame,
     sumOfDiscountedFutureRewards = zeros(𝖠)
     immediateReward              = zeros(𝖲, 𝖠)
 
+    # initialize immediate reward matrix
     for s in 1:𝖲, a in 1:𝖠
         immediateReward[s, a] = get(R, (s, a), 0)
     end
@@ -28,12 +30,11 @@ function valueIterationGaussSeidel(𝖲::Int, 𝖠::Int, dataset::DataFrame,
 
             for a in 1:𝖠
 
-                if s ∉ terminalStates
-                    sumOfDiscountedFutureRewards[a] = γ*sum(get(T, (s, a, sp), 0)*Up[sp] for sp in reachableStates(s))
-                end
+                sumOfDiscountedFutureRewards[a] = γ*sum(get(T, (s, a, sp), 0)*Up[sp] for sp in reachableStates(s))
 
             end
 
+            # update value function and policy at state s
             Up[s], π[s] = findmax(immediateReward[s, :] + sumOfDiscountedFutureRewards)
 
         end
