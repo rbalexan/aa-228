@@ -4,7 +4,11 @@ my workspace for AA 228: decision making under uncertainty
 
 projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) | [project 2](https://github.com/rbalexan/aa-228/tree/master/project-2) | [final project](https://github.com/rbalexan/aa-228/tree/master/final-project) 
 
+
+
 ---
+
+
 
 #### [project 1 | Bayesian structure learning](https://github.com/rbalexan/aa-228/tree/master/project-1/):
 
@@ -17,7 +21,13 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 <img src="project-1/doc/figs/medium-K2-100.png" alt="Bayesian network computed using 100 randomized restarts of K2 search" style="zoom:25%;" />
 
 <p align="center"> <b>Bayesian network computed using 100 randomized restarts of K2 search</b> </p>
+
+
+
+
 ---
+
+
 
 #### [project 2 | reinforcement learning](https://github.com/rbalexan/aa-228/tree/master/project-2/):
 
@@ -32,10 +42,16 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 <img src="project-2/plots/medium_πModal_GSVI.png" alt="Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update" style="zoom:15%;" />
 
 <p align="center"> <b>Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update</b> </p>
+
+
 ---
+
+
 
 #### [final project | dynamic pricing in the airline industry using reinforcement learning](https://github.com/rbalexan/aa-228/tree/master/final-project):
 
 > Dynamic pricing in the airline industry demonstrates some of the most effective pricing schemes in business to maximize revenue based on customers' willingness to pay for particular goods at particular times. We propose to develop a dynamic pricing reinforcement learning algorithm to maximize revenue for a single flight with multiple customer segments. We suggest reinforcement learning as it is a model-free paradigm and thus less sensitive to unusual demand patterns, and because it is a relatively new approach to dynamic pricing for airlines.
+
+
 
 ---
