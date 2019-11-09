@@ -14,7 +14,7 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 - K2 directed graph search ([`singleK2Search.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/singleK2Search.jl)) with random restarts ([`multiK2Search.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/multiK2Search.jl)) 
 - additional documentation ([`readme.pdf`](https://github.com/rbalexan/aa-228/tree/master/project-1/doc/README.pdf))
 
-![Bayesian network computed using 100 randomized restarts of K2 search](project-1/graphs/medium-K2-100.svg)
+<img src="project-1/doc/figs/medium-K2-100.png" alt="Bayesian network computed using 100 randomized restarts of K2 search" style="zoom:25%;" />
 
 <p align="center"> <b>Bayesian network computed using 100 randomized restarts of K2 search</b> </p>
 ---
@@ -29,7 +29,7 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 - modal policy updating ([`modalPolicyUpdating.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/modalPolicyUpdating.jl))
 - additional documentation ([`readme.pdf`](https://github.com/rbalexan/aa-228/tree/master/project-2/doc/README.pdf))
 
-![Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update](project-2/plots/medium_πModal_GSVI.png)
+<img src="project-2/plots/medium_πModal_GSVI.png" alt="Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update" style="zoom:15%;" />
 
 <p align="center"> <b>Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update</b> </p>
 ---
