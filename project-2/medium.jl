@@ -6,7 +6,7 @@ using LinearAlgebra
 using Distributions
 
 include("inferTransitionAndReward.jl")
-include("modalPolicyFilling.jl")
+include("modalPolicyUpdating.jl")
 include("plotMedium.jl")
 include("sarsaLambdaLearning.jl")
 include("sarsaLambdaLearningProportionate.jl")
@@ -77,7 +77,7 @@ f = 3
 @show t
 
 # compute the modally-filled policy
-πModal = modalPolicyFilling(𝖲, U, π, N)
+πModal = modalPolicyUpdating(𝖲, U, π, N)
 
 # output policy and parameter files and plot the solutions
 writePolicy(π,      "medium_" * solutionType)

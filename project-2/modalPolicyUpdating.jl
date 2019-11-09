@@ -1,4 +1,4 @@
-function modalPolicyFilling(𝖲, U, π, N)
+function modalPolicyUpdating(𝖲, U, π, N)
 
     πp = deepcopy(π)
 

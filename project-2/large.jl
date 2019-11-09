@@ -6,7 +6,7 @@ using LinearAlgebra
 using Distributions
 
 include("inferTransitionAndReward.jl")
-include("modalPolicyFilling.jl")
+include("modalPolicyUpdating.jl")
 include("plotLarge.jl")
 include("sarsaLambdaLearning.jl")
 include("sarsaLambdaLearningProportionate.jl")
