@@ -14,10 +14,9 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 - K2 directed graph search ([`singleK2Search.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/singleK2Search.jl)) with random restarts ([`multiK2Search.jl`](https://github.com/rbalexan/aa-228/tree/master/project-1/multiK2Search.jl)) 
 - additional documentation ([`readme.pdf`](https://github.com/rbalexan/aa-228/tree/master/project-1/doc/README.pdf))
 
-![Bayesian network computed using 100 randomized restarts of K2 search](project-1/doc/figs/medium-K2-100-eps-converted-to.pdf)
+![Bayesian network computed using 100 randomized restarts of K2 search](project-1/graphs/medium-K2-100.svg)
 
 <p align="center"> <b>Bayesian network computed using 100 randomized restarts of K2 search</b> </p>
-
 ---
 
 #### [project 2 | reinforcement learning](https://github.com/rbalexan/aa-228/tree/master/project-2/):
@@ -33,7 +32,6 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 ![Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update](project-2/plots/medium_πModal_GSVI.png)
 
 <p align="center"> <b>Optimal policy in the phase space representation using Gauss-Seidel value iteration and modal policy update</b> </p>
-
 ---
 
 #### [final project | dynamic pricing in the airline industry using reinforcement learning](https://github.com/rbalexan/aa-228/tree/master/final-project):
