@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  21 OCT 2019 09:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  8 NOV 2019 18:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1263,55 +1263,253 @@ LaTeX Font Info:    Font shape `T1/phv/m/n' will be
 (Font)              scaled to size 11.39996pt on input line 68.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <10> not available
 (Font)              Font shape `T1/ppl/b/n' tried instead on input line 74.
+LaTeX Font Info:    Try loading font information for OT1+ppl on input line 74.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1ppl.fd
+File: ot1ppl.fd 2001/06/04 font definitions for OT1/ppl.
+)
+LaTeX Font Info:    Try loading font information for OML+zplm on input line 74.
+
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omlzplm.fd
+File: omlzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OML/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMS+zplm on input line 74.
+
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omszplm.fd
+File: omszplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMS/zplm.
+)
+LaTeX Font Info:    Try loading font information for OMX+zplm on input line 74.
+
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/omxzplm.fd
+File: omxzplm.fd 2002/09/08 Fontinst v1.914 font definitions for OMX/zplm.
+)
+LaTeX Font Info:    Try loading font information for OT1+zplm on input line 74.
+
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ot1zplm.fd
+File: ot1zplm.fd 2002/09/08 Fontinst v1.914 font definitions for OT1/zplm.
+)
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 74.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 74.
+LaTeX Font Info:    Font shape `U/msa/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 74.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 10.42007pt on input line 74.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 7.91925pt on input line 74.
+LaTeX Font Info:    Font shape `U/msb/m/n' will be
+(Font)              scaled to size 6.25204pt on input line 74.
+LaTeX Font Info:    Try loading font information for TS1+ppl on input line 74.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ts1ppl.fd
+File: ts1ppl.fd 2001/06/04 font definitions for TS1/ppl.
+)
+LaTeX Font Info:    Font shape `TS1/ppl/bx/n' in size <10> not available
+(Font)              Font shape `TS1/ppl/b/n' tried instead on input line 74.
+LaTeX Font Info:    Font shape `TS1/ppl/bx/n' in size <7.6> not available
+(Font)              Font shape `TS1/ppl/b/n' tried instead on input line 74.
+LaTeX Font Info:    Font shape `TS1/ppl/bx/n' in size <6> not available
+(Font)              Font shape `TS1/ppl/b/n' tried instead on input line 74.
 LaTeX Font Info:    Font shape `T1/ppl/bx/n' in size <12> not available
-(Font)              Font shape `T1/ppl/b/n' tried instead on input line 78.
+(Font)              Font shape `T1/ppl/b/n' tried instead on input line 82.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 78.
-LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 11.39996pt on input line 78.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 82.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 82.
+(Font)              scaled to size 11.39996pt on input line 82.
+LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 86.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 9.49997pt on input line 86.
+LaTeX Font Info:    Try loading font information for U+fplmbb on input line 88.
 
 
-Package caption Warning: Unused \captionsetup[figure] on input line 63.
-See the caption package documentation for explanation.
-
-
-Package caption Warning: Unused \captionsetup[table] on input line 64.
-See the caption package documentation for explanation.
-
-
-AED: lastpage setting LastPage
-[1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+(/usr/local/texlive/2015/texmf-dist/tex/latex/psnfss/ufplmbb.fd
+File: ufplmbb.fd 2003/10/30 Fontinst v1.914 font definitions for U/fplmbb.
+) [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 ]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 128.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 128.
+Overfull \hbox (0.47018pt too wide) in paragraph at lines 104--104
+[] 
+ []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 111--112
+[]\T1/ppl/m/n/10 Gauss-Seidel value it-er-a-tion us-ing the
+ []
+
+LaTeX Font Info:    Try loading font information for T1+cmtt on input line 120.
+
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1cmtt.fd
+File: t1cmtt.fd 2014/09/29 v2.5h Standard LaTeX font definitions
+)
+<../plots/small_U_GSVI.png, id=30, 3613.5pt x 2409.0pt>
+File: ../plots/small_U_GSVI.png Graphic file (type png)
+
+<use ../plots/small_U_GSVI.png>
+Package pdftex.def Info: ../plots/small_U_GSVI.png used on input line 126.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+<../plots/small_π_GSVI.png, id=31, 3613.5pt x 2409.0pt>
+File: ../plots/small_π_GSVI.png Graphic file (type png)
+
+<use ../plots/small_π_GSVI.png>
+Package pdftex.def Info: ../plots/small_π_GSVI.png used on input line 127.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 128.
+See the caption package documentation for explanation.
+
+<../plots/small_U_sarsaLambdaGA.png, id=32, 3613.5pt x 2409.0pt>
+File: ../plots/small_U_sarsaLambdaGA.png Graphic file (type png)
+
+<use ../plots/small_U_sarsaLambdaGA.png>
+Package pdftex.def Info: ../plots/small_U_sarsaLambdaGA.png used on input line 
+133.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+<../plots/small_π_sarsaLambdaGA.png, id=33, 3613.5pt x 2409.0pt>
+File: ../plots/small_π_sarsaLambdaGA.png Graphic file (type png)
+
+<use ../plots/small_π_sarsaLambdaGA.png>
+Package pdftex.def Info: ../plots/small_π_sarsaLambdaGA.png used on input line
+ 134.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 135.
+See the caption package documentation for explanation.
+
+[2 <../plots/small_U_GSVI.png> <../plots/small_π_GSVI.png>]
+<../plots/medium_U_GSVI.png, id=49, 3613.5pt x 2409.0pt>
+File: ../plots/medium_U_GSVI.png Graphic file (type png)
+
+<use ../plots/medium_U_GSVI.png>
+Package pdftex.def Info: ../plots/medium_U_GSVI.png used on input line 144.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+<../plots/medium_π_GSVI.png, id=50, 3613.5pt x 2409.0pt>
+File: ../plots/medium_π_GSVI.png Graphic file (type png)
+
+<use ../plots/medium_π_GSVI.png>
+Package pdftex.def Info: ../plots/medium_π_GSVI.png used on input line 145.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 146.
+See the caption package documentation for explanation.
+
+<../plots/medium_πModal_GSVI.png, id=51, 3613.5pt x 2409.0pt>
+File: ../plots/medium_πModal_GSVI.png Graphic file (type png)
+
+<use ../plots/medium_πModal_GSVI.png>
+Package pdftex.def Info: ../plots/medium_πModal_GSVI.png used on input line 15
+1.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 152.
+See the caption package documentation for explanation.
+
+[3 <../plots/small_U_sarsaLambdaGA.png> <../plots/small_π_sarsaLambdaGA.png> <
+../plots/medium_U_GSVI.png> <../plots/medium_π_GSVI.png> <../plots/medium_πMo
+dal_GSVI.png>] <../plots/medium_U_sarsaLambda.png, id=60, 3613.5pt x 2409.0pt>
+File: ../plots/medium_U_sarsaLambda.png Graphic file (type png)
+
+<use ../plots/medium_U_sarsaLambda.png>
+Package pdftex.def Info: ../plots/medium_U_sarsaLambda.png used on input line 1
+58.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+<../plots/medium_π_sarsaLambda.png, id=61, 3613.5pt x 2409.0pt>
+File: ../plots/medium_π_sarsaLambda.png Graphic file (type png)
+
+<use ../plots/medium_π_sarsaLambda.png>
+Package pdftex.def Info: ../plots/medium_π_sarsaLambda.png used on input line 
+159.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 160.
+See the caption package documentation for explanation.
+
+<../plots/large_U_GSVI.png, id=62, 3613.5pt x 2409.0pt>
+File: ../plots/large_U_GSVI.png Graphic file (type png)
+
+<use ../plots/large_U_GSVI.png>
+Package pdftex.def Info: ../plots/large_U_GSVI.png used on input line 168.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+<../plots/large_π_GSVI.png, id=63, 3613.5pt x 2409.0pt>
+File: ../plots/large_π_GSVI.png Graphic file (type png)
+
+<use ../plots/large_π_GSVI.png>
+Package pdftex.def Info: ../plots/large_π_GSVI.png used on input line 169.
+(pdftex.def)             Requested size: 229.8775pt x 153.24548pt.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 170.
+See the caption package documentation for explanation.
+
+
+Package caption Warning: The option `hypcap=true' will be ignored for this
+(caption)                particular \caption on input line 174.
+See the caption package documentation for explanation.
+
+[4 <../plots/medium_U_sarsaLambda.png> <../plots/medium_π_sarsaLambda.png> <..
+/plots/large_U_GSVI.png> <../plots/large_π_GSVI.png>]
+
+AED: lastpage setting LastPage
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 189.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 189.
 (./README.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 128.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 128.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 189.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 189.
 Package rerunfilecheck Info: File `README.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 128.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 189.
  ) 
 Here is how much of TeX's memory you used:
- 27154 strings out of 493089
- 536571 string characters out of 6134842
- 643936 words of memory out of 5000000
- 30165 multiletter control sequences out of 15000+600000
- 25735 words of font info for 33 fonts, out of 8000000 for 9000
+ 27437 strings out of 493089
+ 541828 string characters out of 6134842
+ 653955 words of memory out of 5000000
+ 30347 multiletter control sequences out of 15000+600000
+ 51849 words of font info for 107 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,11n,69p,946b,332s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2015/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/
-2015/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb>
-Output written on README.pdf (1 page, 16627 bytes).
+ 55i,12n,69p,2090b,479s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbsy10.pfb></usr/local/tex
+live/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texli
+ve/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texliv
+e/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/
+2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2
+015/texmf-dist/fonts/type1/public/mathpazo/fplmbb.pfb></usr/local/texlive/2015/
+texmf-dist/fonts/type1/public/mathpazo/fplmbi.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/mathpazo/fplmr.pfb></usr/local/texlive/2015/texmf-dis
+t/fonts/type1/public/mathpazo/fplmri.pfb></usr/local/texlive/2015/texmf-dist/fo
+nts/type1/public/cm-super/sftt1000.pfb></usr/local/texlive/2015/texmf-dist/font
+s/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1
+/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/pa
+latino/uplb8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/
+uplbi8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplr8a
+.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/urw/palatino/uplri8a.pfb>
+Output written on README.pdf (4 pages, 1635358 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 26 compressed objects within 1 object stream
- 7 named destinations out of 1000 (max. 500000)
- 13 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 134 PDF objects out of 1000 (max. 8388607)
+ 99 compressed objects within 1 object stream
+ 25 named destinations out of 1000 (max. 500000)
+ 68 words of extra memory for PDF output out of 10000 (max. 10000000)
 
