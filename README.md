@@ -14,7 +14,13 @@ projects: [project 1](https://github.com/rbalexan/aa-228/tree/master/project-1) 
 
 ### [project 2 | reinforcement learning](https://github.com/rbalexan/aa-228/tree/master/project-2/):
 
->An implementation of dynamic programming for Markov decision processes (MDPs) using value iteration and policy iteration.
+>An implementation of various dynamic programming and approximate dynamic programming algorithms for Markov decision processes (MDPs) in a batch reinforcement learning setting. Included algorithms are value iteration, Gauss-Seidel value iteration, sarsa($\lambda$), sarsa($\lambda$) with natural annealing, sarsa($\lambda$) with local approximation, sarsa($\lambda$) with global approximation via Fourier series expansion, and modal policy updating.
+
+- maximum-likelihood estimate of transition and reward models ([`inferTransitionAndReward.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/inferTransitionAndReward.jl))
+- value iteration ([`valueIteration.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/valueIteration.jl)) and Gauss-Seidel value iteration (assumed ordering) ([`valueIteration.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/valueIterationGaussSeidel.jl))
+- sarsa with eligibility traces (sarsa($\lambda$)) ([`sarsaLambdaLearning.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/sarsaLambdaLearning.jl)), with natural annealing ([`sarsaLambdaLearningProportionate.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/sarsaLambdaLearningProportionate.jl)), local approximation ([`sarsaLambdaLearningLocalApproximation.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/sarsaLambdaLearningLocalApproximation.jl)), global approximation ([`sarsaLambdaLearningGlobalApproximation.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/sarsaLambdaLearningGlobalApproximation.jl))
+- modal policy updating ([`modalPolicyUpdating.jl`](https://github.com/rbalexan/aa-228/tree/master/project-2/modalPolicyUpdating.jl))
+- additional documentation ([`readme.pdf`](https://github.com/rbalexan/aa-228/tree/master/project-2/doc/README.pdf))
 
 ### [final project | dynamic pricing in the airline industry using reinforcement learning](https://github.com/rbalexan/aa-228/tree/master/final-project):
 
