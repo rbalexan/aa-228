@@ -2,38 +2,76 @@ using CSV
 using DataFrames
 using Plots
 using Printf
+using LinearAlgebra
+using Distributions
 
 include("inferTransitionAndReward.jl")
+include("modalPolicyFilling.jl")
+include("plotLarge.jl")
+include("sarsaLambdaLearning.jl")
+include("sarsaLambdaLearningProportionate.jl")
+include("sarsaLambdaLearningLocalApproximation.jl")
+include("sarsaLambdaLearningGlobalApproximation.jl")
 include("valueIteration.jl")
 include("valueIterationGaussSeidel.jl")
+include("writeParameters.jl")
 include("writePolicy.jl")
 
 # load the dataset
 dataset = CSV.read("data/large.csv")
 
-# compute state space and action space
-𝒮  = collect(1:320000) #312020
-𝒜  = collect(1:9)
-𝖲  = size(𝒮)[1]
-𝖠  = size(𝒜)[1]
+# set size of state space and action space
+𝖲 = 320000 # 312020
+𝖠 = 9
 
-T, R = inferTransitionAndReward(dataset, 𝖲, 𝖠)
-
-γ = 0.95
-terminalStates = []#151313, 151202]
+# define reachable states of s
 reachableStateSpace = unique(dataset.s)
-reachableStates = (s) -> reachableStateSpace
+reachableStates     = (s) -> reachableStateSpace
+
+# solve function
+function solve(solutionType, 𝖲, 𝖠, dataset, reachableStates, α, β, γ, ϵ, λ, N, reachableStateSpace)
+
+    if     solutionType == "VI"
+        U, π = valueIteration(                        𝖲, 𝖠, dataset, reachableStates, γ, ϵ)
+    elseif solutionType == "GSVI"
+        U, π = valueIterationGaussSeidel(             𝖲, 𝖠, dataset, reachableStates, γ, ϵ, reachableStateSpace)
+    elseif solutionType == "sarsaLambda"
+        U, π = sarsaLambdaLearning(                   𝖲, 𝖠, dataset, α, γ, λ)
+    elseif solutionType == "sarsaLambdaProp"
+        U, π = sarsaLambdaLearningProportionate(      𝖲, 𝖠, dataset, γ, λ)
+    elseif solutionType == "sarsaLambdaLA"
+        U, π = sarsaLambdaLearningLocalApproximation( 𝖲, 𝖠, dataset, N, α, γ, λ)
+    elseif solutionType == "sarsaLambdaGA"
+        U, π = sarsaLambdaLearningGlobalApproximation(𝖲, 𝖠, dataset, β, α, γ, λ)
+    end
+
+    return U, π
+
+end
+
+# solution type
+solutionType = "GSVI"
+
+# solution parameters
+γ = 0.95
 ϵ = 0.1
+α = 0.1
+λ = 0.9
 
-U, π = valueIteration(           𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ)
-U, π = valueIterationGaussSeidel(𝖲, 𝖠, T, R, γ, terminalStates, reachableStates, ϵ, reachableStateSpace)
+# define neighborhood of s
+N = (s, a) -> 0
 
-writePolicy(π[1:312020], "large")
+# define the global approximation function (fourier series decomposition)
+β = (s, a) -> 0
 
-gr()
-U = rotl90(reshape(U, (10000, 32)))
-heatmap(reverse(U[32 .- [15, 23, 27, 29, 30], sort(unique(mod.(uniqueStates, 10000)))], dims=1), c=:viridis, framestyle=:box, dpi=600)
-savefig("plots/large_U.png")
-π = rotl90(reshape(π, (10000, 32)))
-heatmap(reverse(π[32 .- [15, 23, 27, 29, 30], sort(unique(mod.(uniqueStates, 10000)))], dims=1), c=:viridis, framestyle=:box, dpi=600)
-savefig("help plots/large_π.png")
+# solve
+(U, p), t = @timed solve(solutionType, 𝖲, 𝖠, dataset, reachableStates, α, β, γ, ϵ, λ, N, reachableStateSpace)
+
+@show t
+
+# output policy and parameter files and plot the solutions
+writePolicy(p[1:312020], "large_" * solutionType)
+
+writeParameters(γ, ϵ, α, λ, 0, t, "large_" * solutionType)
+
+plotLarge(U, p, solutionType, reachableStateSpace)
