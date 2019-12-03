@@ -1,42 +1,66 @@
 function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
 
+    struct Customer
+        # i::Int  # index
+        wtpThreshold::Real   # w
+        wtpFlexibility::Real # k
+    end
+
     # Initialize variables
-    u′ = 0
-    paying_customers = []
+    ticketsSold = 0                                          # u'
+    customersWithTickets    = [Set() for i in 1:length(p.F)]
+    customersSeekingTickets = [Set() for i in 1:length(p.F)] # C
+
     α, β, w_μ, w_σ, k1, k2 = p.F[f]
-    n_dist = Poisson(α*(p.T-t) + β)
-    w_dist = Normal(w_μ, w_σ)
-    k_dist = Uniform(k1, k2)
-    n = rand(n_dist,1)[]
+    customerArrivalDistribution = Poisson(α*(p.T-t) + β) # n-distribution
+    WTPThresholdDistribution    = Normal(μ, σ)           # w-distribution
+    WTPFlexibilityDistribution  = Uniform(k1, k2)        # k-distribution
+
+    # Sample the number of new customers from the Poisson distribution
+    newCustomers = rand(customerArrivalDistribution, 1)[] # n
     #@show n
 
-    # Add new cutomers for this time step
-    for i = 1:n
-        w = rand(w_dist,1)[]
-        k = rand(k_dist,1)[]
-        push!(C[f], [i,w,k])
+    # Add new customers for this time step
+    for newCustomer in 1:newCustomers
+
+        # for existingCustomer in customersSeekingTickets
+        #     push!(existingCustomerIndices, existingCustomer.i)
+        # end
+
+        # get first available index, WTP parameters
+        # i = first(symdiff(1:10000, existingCustomerIndices)
+        wtpThreshold   = rand(wtpThresholdDistribution,   1)[] # w
+        wtpFlexibility = rand(wtpFlexibilityDistribution, 1)[] # k
+
+        customer = Customer(wtpThreshold, wtpFlexibility)
+        push!(customersSeekingTickets[f], customer)
         #@show "New customer", i, w, k, length(C[f])
+
     end
 
     # Check to see which customers will purchase tickets
-    for j in C[f]
-        i, w, k = j
-        ϕ = 1 - cdf(Logistic(w,k),a)
-        b_dist = Bernoulli(ϕ)
-        b = rand(b_dist,1)[]
-        if b == 1
-            u′ += 1
-            push!(paying_customers, j)
+    for customer in deepcopy(customersSeekingTickets[f])
+
+        # compute the purchase probability and sample from its Bernoulli distribution
+        purchaseProbability  = ccdf(Logistic(customer.w, customer.k), a) # ϕ value
+        purchaseDistribution = Bernoulli(purchaseProbability)
+        purchase             = rand(purchaseDistribution, 1)[]
+
+        if purchase
+
+            ticketsSold += 1
+            pop!( customersSeekingTickets[f], customer)
+            push!(customersWithTickets[f],    customer)
+
         end
         #@show "Check", [round(x,digits=0) for x in j], round(ϕ*100,digits=0), b
+
     end
 
-    # Remove paying customers from global list of customers
-    setdiff!(C[f], paying_customers)
-
     # Calculate current reward
-    r = a * u′
+    reward = a * ticketsSold
 
     # Return results
-    return (v-u′,u′,t+1,r)
+    return (v-u′, u′, t+1, reward)
+
 end
