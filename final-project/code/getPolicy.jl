@@ -6,7 +6,7 @@ function getPolicy(p::Problem, Q::Array)
 
     # Extract policy
     for s in 1:S_size
-        π⋆[s] = argmax(Q[s,:])
+        π⋆[s] = argmax(Q[s,:]) # can replace with argmax(Q, dim=1), I think
     end
 
     # Return policy
