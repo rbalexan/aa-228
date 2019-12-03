@@ -1,19 +1,17 @@
 function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
 
     struct Customer
-        # i::Int  # index
         wtpThreshold::Real   # w
         wtpFlexibility::Real # k
     end
 
     # Initialize variables
     ticketsSold = 0                                          # u'
-    customersWithTickets    = [Set() for i in 1:length(p.F)]
-    customersSeekingTickets = [Set() for i in 1:length(p.F)] # C
 
+    fareClass = p.F[f]
     α, β, w_μ, w_σ, k1, k2 = p.F[f]
     customerArrivalDistribution = Poisson(α*(p.T-t) + β) # n-distribution
-    WTPThresholdDistribution    = Normal(μ, σ)           # w-distribution
+    WTPThresholdDistribution    = Normal(w_μ, w_σ)       # w-distribution
     WTPFlexibilityDistribution  = Uniform(k1, k2)        # k-distribution
 
     # Sample the number of new customers from the Poisson distribution
@@ -23,12 +21,7 @@ function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
     # Add new customers for this time step
     for newCustomer in 1:newCustomers
 
-        # for existingCustomer in customersSeekingTickets
-        #     push!(existingCustomerIndices, existingCustomer.i)
-        # end
-
-        # get first available index, WTP parameters
-        # i = first(symdiff(1:10000, existingCustomerIndices)
+        # get WTP parameters
         wtpThreshold   = rand(wtpThresholdDistribution,   1)[] # w
         wtpFlexibility = rand(wtpFlexibilityDistribution, 1)[] # k
 
@@ -42,7 +35,7 @@ function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
     for customer in deepcopy(customersSeekingTickets[f])
 
         # compute the purchase probability and sample from its Bernoulli distribution
-        purchaseProbability  = ccdf(Logistic(customer.w, customer.k), a) # ϕ value
+        purchaseProbability  = ccdf(Logistic(customer.wtpThreshold, customer.wtpFlexibility), a) # ϕ value
         purchaseDistribution = Bernoulli(purchaseProbability)
         purchase             = rand(purchaseDistribution, 1)[]
 

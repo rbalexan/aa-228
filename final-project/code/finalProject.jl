@@ -14,17 +14,23 @@ struct Problem
    F::Dict     # Fare class parameters
 end
 
+struct FareClass
+
+end
+
 # Specify fare class parameters: α, β, w_μ, w_σ, k1, k2, A
 # α, β: # customers; w_μ, w_σ: WTP threshold; k1, k2: WTP flexibility; A: action space
 fare_class_parameters = Dict(
-    1 => (1, 10, 800, 100, 1, 500, collect(760:10:850)),
-    2 => (5,  2, 400,  50, 1,  10, collect(360:10:450)),
-    3 => (2,  5, 500,  50, 1,  10, collect(460:10:550))
+    :business => FareClass(1, 10, 800, 100, 1, 500, collect(760:10:850)),
+    :leisure  => (5,  2, 400,  50, 1,  10, collect(360:10:450)),
+    :mixed    => (2,  5, 500,  50, 1,  10, collect(460:10:550))
 )
 
 # Initialize the problem and global list of customers
 p = Problem(10, 100, 0.2, 0.9, 0.9, fare_class_parameters)
-C = [[] for i=1:length(p.F)]
+
+customersWithTickets    = [Set() for i in 1:length(p.F)]
+customersSeekingTickets = [Set() for i in 1:length(p.F)] # C
 
 # Run generativeModel
 generativeModel(p, 1, 20, 0, 18, 900)
