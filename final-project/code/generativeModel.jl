@@ -31,6 +31,9 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     end
 
     # Check to see which customers will purchase tickets
+
+    customersWithPurchase = Set{customer}()
+
     for c in deepcopy(customersWithoutTickets[f])
 
         # Compute the purchase probability and sample from its Bernoulli distribution
@@ -42,8 +45,7 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
         if purchase
 
             ticketsSold += 1
-            pop!( customersWithoutTickets[f], c)
-            push!(customersWithTickets[f],    c)
+            push!(customersWithPurchase, c)
 
         end
 
@@ -58,6 +60,6 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     revenue = ticketPrice * ticketsSold
 
     # Return results
-    return ticketsAvailable - ticketsSold, ticketsSold, revenue
+    return ticketsAvailable - ticketsSold, ticketsSold, revenue, customersWithPurchase
 
 end
