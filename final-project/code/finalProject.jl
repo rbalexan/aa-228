@@ -1,11 +1,12 @@
-using CSV
-using DataFrames
-using Plots
-using Printf
+# using CSV
+# using DataFrames
+# using Plots
+# using Printf
 using Distributions
+using Random
 
 # Define the problem structure
-struct Problem
+struct MultiFareDynamicPricingProblem
    T::Int      # Time horizon
    V::Int      # Number of seats in the plane
    ϵ::Real     # ϵ-greedy parameter
@@ -14,26 +15,45 @@ struct Problem
    F::Dict     # Fare class parameters
 end
 
+# Define the fare class stucture
 struct FareClass
-
+   customerArrivalSlope::Real          # α
+   customerArrivalIntercept::Real      # β
+   wtpThresholdMean::Real              # w_μ
+   wtpThresholdStandardDeviation::Real # w_σ
+   wtpFlexibilityLowerBound::Real      # k1
+   wtpFlexibilityUpperBound::Real      # k2
+   actionSpace::Vector
 end
 
-# Specify fare class parameters: α, β, w_μ, w_σ, k1, k2, A
-# α, β: # customers; w_μ, w_σ: WTP threshold; k1, k2: WTP flexibility; A: action space
-fare_class_parameters = Dict(
+# Define the customer structure
+struct Customer
+     wtpThreshold::Real   # w
+     wtpFlexibility::Real # k
+end
+
+include("generativeModel.jl")
+Random.seed!(1) # for repeatability
+
+# Specify fare classes
+fareClasses = Dict(
     :business => FareClass(1, 10, 800, 100, 1, 500, collect(760:10:850)),
-    :leisure  => (5,  2, 400,  50, 1,  10, collect(360:10:450)),
-    :mixed    => (2,  5, 500,  50, 1,  10, collect(460:10:550))
+    :leisure  => FareClass(5,  2, 400,  50, 1,  10, collect(360:10:450)),
+    :mixed    => FareClass(2,  5, 500,  50, 1,  10, collect(460:10:550))
 )
 
 # Initialize the problem and global list of customers
-p = Problem(10, 100, 0.2, 0.9, 0.9, fare_class_parameters)
+problem = MultiFareDynamicPricingProblem(10, 100, 0.2, 0.9, 0.9, fareClasses)
 
-customersWithTickets    = [Set() for i in 1:length(p.F)]
-customersSeekingTickets = [Set() for i in 1:length(p.F)] # C
+customersWithoutTickets = Dict(k => Set() for k in keys(fareClasses)) # C
+customersWithTickets    = Dict(k => Set() for k in keys(fareClasses))
 
 # Run generativeModel
-generativeModel(p, 1, 20, 0, 18, 900)
+ticketsAvailable, ticketsSold, fareClassReward = generativeModel(problem, :business, 20, 18, 900)
+
+#for t in 1:30, fareClass in keys(fareClasses)
+#   ticketsAvailable, ticketsSold, fareClassReward = generativeModel(problem, fareClass, 20, t, policy[fareClass][s])
+#end
 
 # Get input and run
 # if length(ARGS) != 1

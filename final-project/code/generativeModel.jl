@@ -1,18 +1,13 @@
-function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
-
-    struct Customer
-        wtpThreshold::Real   # w
-        wtpFlexibility::Real # k
-    end
+function generativeModel(p::MultiFareDynamicPricingProblem, f::Symbol,
+    ticketsAvailable::Int, t::Int, ticketPrice::Real)
 
     # Initialize variables
-    ticketsSold = 0                                          # u'
+    ticketsSold = 0   # u
 
     fareClass = p.F[f]
-    α, β, w_μ, w_σ, k1, k2 = p.F[f]
-    customerArrivalDistribution = Poisson(α*(p.T-t) + β) # n-distribution
-    WTPThresholdDistribution    = Normal(w_μ, w_σ)       # w-distribution
-    WTPFlexibilityDistribution  = Uniform(k1, k2)        # k-distribution
+    customerArrivalDistribution = Poisson(fareClass.customerArrivalSlope*(p.T - t) + fareClass.customerArrivalIntercept) # n-distribution
+    wtpThresholdDistribution    = Normal( fareClass.wtpThresholdMean,         fareClass.wtpThresholdStandardDeviation)   # w-distribution
+    wtpFlexibilityDistribution  = Uniform(fareClass.wtpFlexibilityLowerBound, fareClass.wtpFlexibilityUpperBound)        # k-distribution
 
     # Sample the number of new customers from the Poisson distribution
     newCustomers = rand(customerArrivalDistribution, 1)[] # n
@@ -26,23 +21,24 @@ function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
         wtpFlexibility = rand(wtpFlexibilityDistribution, 1)[] # k
 
         customer = Customer(wtpThreshold, wtpFlexibility)
-        push!(customersSeekingTickets[f], customer)
+        push!(customersWithoutTickets[f], customer)
         #@show "New customer", i, w, k, length(C[f])
 
     end
 
     # Check to see which customers will purchase tickets
-    for customer in deepcopy(customersSeekingTickets[f])
+    for customer in deepcopy(customersWithoutTickets[f])
 
         # compute the purchase probability and sample from its Bernoulli distribution
-        purchaseProbability  = ccdf(Logistic(customer.wtpThreshold, customer.wtpFlexibility), a) # ϕ value
+        purchaseProbability  = ticketPrice <= customer.wtpThreshold ?
+            1 : ccdf(Logistic(customer.wtpThreshold, customer.wtpFlexibility), ticketPrice) # ϕ value
         purchaseDistribution = Bernoulli(purchaseProbability)
-        purchase             = rand(purchaseDistribution, 1)[]
+        purchase             = Bool(rand(purchaseDistribution, 1)[])
 
         if purchase
 
             ticketsSold += 1
-            pop!( customersSeekingTickets[f], customer)
+            pop!( customersWithoutTickets[f], customer)
             push!(customersWithTickets[f],    customer)
 
         end
@@ -51,9 +47,9 @@ function generativeModel(p::Problem, f::Int, v::Int, u::Int, t::Int, a::Int)
     end
 
     # Calculate current reward
-    reward = a * ticketsSold
+    revenue = ticketPrice * ticketsSold
 
     # Return results
-    return (v-u′, u′, t+1, reward)
+    return ticketsAvailable - ticketsSold, ticketsSold, revenue
 
 end
