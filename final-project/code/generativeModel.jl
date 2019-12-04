@@ -10,7 +10,7 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     wtpFlexibilityDistribution  = Uniform(fareClass.wtpFlexibilityLowerBound, fareClass.wtpFlexibilityUpperBound)                  # k-distribution
 
     # Sample the number of new customers from the Poisson distribution
-    newCustomers = rand(customerArrivalDistribution, 1)[] # n
+    newCustomers = rand(customerArrivalDistribution) # n
 
     # @show newCustomers
 
@@ -18,8 +18,8 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     for newCustomer in 1:newCustomers
 
         # get WTP parameters
-        wtpThreshold   = rand(wtpThresholdDistribution,   1)[] # w
-        wtpFlexibility = rand(wtpFlexibilityDistribution, 1)[] # k
+        wtpThreshold   = rand(wtpThresholdDistribution  ) # w
+        wtpFlexibility = rand(wtpFlexibilityDistribution) # k
 
         c = customer(wtpThreshold, wtpFlexibility)
         push!(customersWithoutTickets[f], c)
@@ -40,7 +40,7 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
         purchaseProbability  = ticketPrice <= c.wtpThreshold ?
             1 : ccdf(Logistic(c.wtpThreshold, c.wtpFlexibility), ticketPrice) # ϕ value
         purchaseDistribution = Bernoulli(purchaseProbability)
-        purchase             = Bool(rand(purchaseDistribution, 1)[])
+        purchase             = Bool(rand(purchaseDistribution))
 
         if purchase
 
