@@ -1,5 +1,5 @@
 function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
-    ticketsAvailable::Int, t::Int, ticketPrice::Real)
+    ticketsAvailable::Int, t::Int, ticketPrice::Real, customersWithoutTicketsByFareClass::Set)
 
     # Initialize variables
     ticketsSold = 0   # u
@@ -22,7 +22,7 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
         wtpFlexibility = rand(wtpFlexibilityDistribution) # k
 
         c = customer(wtpThreshold, wtpFlexibility)
-        push!(customersWithoutTickets[f], c)
+        push!(customersWithoutTicketsByFareClass, c)
 
         # notix = length(customersWithoutTickets[f])
         # tix = length(customersWithTickets[f])
@@ -34,7 +34,7 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
 
     customersWithPurchase = Set{customer}()
 
-    for c in deepcopy(customersWithoutTickets[f])
+    for c in deepcopy(customersWithoutTicketsByFareClass)
 
         # Compute the purchase probability and sample from its Bernoulli distribution
         purchaseProbability  = ticketPrice <= c.wtpThreshold ?
@@ -60,6 +60,6 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     revenue = ticketPrice * ticketsSold
 
     # Return results
-    return ticketsAvailable - ticketsSold, ticketsSold, revenue, customersWithPurchase
+    return ticketsAvailable - ticketsSold, ticketsSold, revenue, newCustomers, customersWithoutTicketsByFareClass, customersWithPurchase
 
 end

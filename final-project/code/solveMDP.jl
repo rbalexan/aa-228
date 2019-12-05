@@ -1,9 +1,13 @@
 function solveMDP(p::multiFareDynamicPricingProblem)
 
+    # Initialize customer lists
+    customersWithoutTickets = Dict(f => Set() for f in keys(fareClasses))
+    customersWithTickets    = Dict(f => Set() for f in keys(fareClasses))
+
     # Initialize state = (ticketsAvailable, t)
     ticketsAvailable = p.totalTickets
     t = 1
-
+    @show "Start", ticketsAvailable, t
     # Initialize state and action spaces
 
     𝖲_space = LinearIndices((0:p.totalTickets,1:p.timeHorizon))
@@ -18,66 +22,77 @@ function solveMDP(p::multiFareDynamicPricingProblem)
     r = 0
 
     # Choose action
-
-    function chooseAction(p::multiFareDynamicPricingProblem, 𝖠_space::LinearIndices, sLinearIndex::Int)
-        ϵ_gaussian      = rand(Normal(p.ϵ, 0))
-        𝖠_size = length(𝖠_space)
-        aLinearIndex    = rand() <= ϵ_gaussian ? rand(1:𝖠_size) : argmax(Q[sLinearIndex, :])
-        aCartesianIndex = CartesianIndices(𝖠_space)[aLinearIndex]
-        a               = Dict(f => p.fareClasses[f].actionSpace[aCartesianIndex[i]] for (i,f) in enumerate(keys(p.fareClasses)))
-        return a, aLinearIndex
-    end
-
-    a, aLinearIndex = chooseAction(p, 𝖠_space, sLinearIndex)
-
+    a, aLinearIndex = chooseAction(p, Q, 𝖠_space, sLinearIndex)
+    @show "Starting action", a, aLinearIndex
     # Loop in t
 
     for t = 1:p.timeHorizon
-
+        @show "NEW LOOP------------------------------------------------------------", t
         ticketsSold′          = Dict(f => 0     for f in keys(p.fareClasses))
         customersWithPurchase = Dict(f => Set() for f in keys(p.fareClasses))
-        @show t, ticketsSold′, customersWithPurchase
+        newCustomers          = Dict(f => 0     for f in keys(p.fareClasses))
 
         for f in keys(p.fareClasses)
-            _, ticketsSold′[f], _, customersWithPurchase[f] = generativeModel(problem, f, ticketsAvailable, t, a[f])
+            _, ticketsSold′[f], _, newCustomers[f], customersWithoutTickets[f], customersWithPurchase[f] = generativeModel(problem, f, ticketsAvailable, t, a[f], customersWithoutTickets[f])
+        @show "Ticket demand", ticketsSold′[f], newCustomers[f]
         end
+
         if sum([ticketsSold′[f] for f in keys(p.fareClasses)]) > ticketsAvailable
+        @show "DEMAND > AVAILABILITY"
             # Filter customersWithPurchase so that its length is exactly equal to ticketsAvailable
             customersWithPurchaseAll = [(f,customer) for f in keys(p.fareClasses) for customer in customersWithPurchase[f]]
-            @show length(customersWithPurchaseAll)
+        @show "Demand count", length(customersWithPurchaseAll)
             customersWithPurchaseAll = shuffle(customersWithPurchaseAll)[1:ticketsAvailable]
             customersWithPurchase = Dict(f => Set([c[2] for c in filter(x->x[1]==f,customersWithPurchaseAll)]) for f in keys(p.fareClasses))
-            @show length(customersWithPurchase[:mixed]), length(customersWithPurchase[:leisure]), length(customersWithPurchase[:business])
+        @show "Tickets sold", length(customersWithPurchase[:mixed]), length(customersWithPurchase[:leisure]), length(customersWithPurchase[:business])
             #Update ticketsSold′
             ticketsSold′ = Dict(f => length(customersWithPurchase[f]) for f in keys(p.fareClasses))
-            @show ticketsSold′
+        @show "Tickets sold dict", ticketsSold′
         end
 
+        @show "Tickets sold", [length(customersWithPurchase[f]) for f in keys(p.fareClasses)]
+        @show "Notix", [length(customersWithoutTickets[f]) for f in keys(p.fareClasses)]
+        @show "Tix", [length(customersWithTickets[f]) for f in keys(p.fareClasses)]
         #  Process purchases
         for f in keys(p.fareClasses)
+        @show "PROCESSING PURCHASES"
             setdiff!(customersWithoutTickets[f], customersWithPurchase[f])
             union!(  customersWithTickets[f],    customersWithPurchase[f])
         end
+        @show "Notix", [length(customersWithoutTickets[f]) for f in keys(p.fareClasses)]
+        @show "Tix", [length(customersWithTickets[f]) for f in keys(p.fareClasses)]
 
         # Calculate new state and reward
         ticketsAvailable′ = ticketsAvailable - sum([ticketsSold′[f] for f in keys(p.fareClasses)])
         t′ = t + 1
         r = sum([a[f]*ticketsSold′[f] for f in keys(p.fareClasses)])
+        @show "New state and reward", ticketsAvailable′, t′, r
 
         # Choose next action
         sCartesianIndex′ = CartesianIndex(findfirst(x->x==ticketsAvailable′,0:p.totalTickets),findfirst(x->x==t′,1:p.timeHorizon))
         sLinearIndex′ = LinearIndices(𝖲_space)[sCartesianIndex′]
-        a′, aLinearIndex′ = chooseAction(p, 𝖠_space, sLinearIndex′)
+        a′, aLinearIndex′ = chooseAction(p, Q, 𝖠_space, sLinearIndex′)
+
+        @show "new action", a′, aLinearIndex′
 
         # Implement the Sarsa update step
+        @show "SARSA update"
+        @show "Old value", Q[sLinearIndex,  aLinearIndex]
         Q[sLinearIndex,  aLinearIndex] += p.η*(r + p.γ*Q[sLinearIndex′,  aLinearIndex′] - Q[sLinearIndex,  aLinearIndex])
+        @show "Primed value", Q[sLinearIndex′,  aLinearIndex′]
+        @show "New value", Q[sLinearIndex,  aLinearIndex]
 
         # Update state and action
         ticketsAvailable = ticketsAvailable′
         t = t′
-        a = a′
+        sLinearIndex = sLinearIndex′
 
-        if ticketsAvailable′ == 0
+        a = a′
+        aLinearIndex,  aLinearIndex′
+
+        @show "Tickets available", ticketsAvailable
+
+        if ticketsAvailable <= 0
             break
         end
     end
