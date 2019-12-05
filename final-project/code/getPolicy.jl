@@ -1,28 +1,26 @@
 function getPolicy(p::multiFareDynamicPricingProblem, iterations::Int)
 
-   stateSpace = LinearIndices((0:p.totalTickets,1:p.timeHorizon))
+   stateSpace  = LinearIndices((0:p.totalTickets,1:p.timeHorizon))
    actionSpace = LinearIndices(zeros([length(p.fareClasses[f].fareActionSpace) for f in keys(p.fareClasses)]...))
    𝖲 = length(stateSpace)
    𝖠 = length(actionSpace)
-   N = zeros(𝖲, 𝖠)
    Q = zeros(𝖲, 𝖠)
 
-   for i = 1:iterations
-      Q′ = solveMDP(p, stateSpace, actionSpace, 𝖲, 𝖠)
-      N += [Q′[x]>0 for x in CartesianIndices(Q′)]
-      Q += Q′
+   for i in 1:iterations
+# need to pass Q into solve MDP for iteration
+      Q, r = solveMDP(p, stateSpace, actionSpace, 𝖲, 𝖠, deepcopy(Q))
       @show "ITERATION======================================================================", iterations
       @show "Q", sum(Q)
+      @show r
    end
 
-   averageQ = Q./(N+[N[x]==0 for x in CartesianIndices(N)])
-
-      @show "averageQ======================================================================="
-      @show "N", sum(averageQ)
-
    # Extract policy
-   policy = argmax(Q, dims=2) # can replace with argmax(Q, dim=1), I think
-   policy = [policy[s][2] for s in 1:𝖲]
+   policyIndices = argmax(Q, dims=2)
 
-   return policy
+   U             = Q[policyIndices]
+   jointPolicy   = [policyIndices[s][2] for s in 1:𝖲]
+   #agentPolicy[f] = ...
+# maybe access each agent's policy
+
+   return jointPolicy, U
 end

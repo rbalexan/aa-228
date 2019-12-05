@@ -5,6 +5,8 @@
 using Distributions
 using Random
 
+# update structs to upper-leading camel case
+
 # Define the problem structure
 struct multiFareDynamicPricingProblem
    timeHorizon::Int  # Time horizon
@@ -32,10 +34,16 @@ struct customer
      wtpFlexibility::Real # k
 end
 
+# include("states.jl") replace stateSpace instances with function call
+# include("actions.jl") ""
+#stateSpace = LinearIndices((0:p.totalTickets,1:p.timeHorizon))
+#actionSpace = LinearIndices(zeros([length(p.fareClasses[f].fareActionSpace) for f in keys(p.fareClasses)]...))
+
 include("generativeModel.jl")
 include("chooseAction.jl")
 include("solveMDP.jl")
 include("getPolicy.jl")
+
 #Random.seed!(1) # for repeatability
 
 # Specify fare classes
@@ -48,9 +56,15 @@ fareClasses = Dict(
 # Initialize the problem and global list of customers
 problem = multiFareDynamicPricingProblem(20, 1000, 0.2, 0.9, 1, fareClasses)
 
+# Solve MMDP for some number of episodes
+# for i in 1:episodes
+#  Q, r= solveMDP(asdnaskjasbdkja, Q)
+# r T[i] = r
+# end
+
 # Run model to get policy
-policy = getPolicy(problem, 2)
-@show [x for x in policy for x
+jointPolicy, U = getPolicy(problem, 2)
+#@show [x for x in policy for x]
 
 #for t in 1:30, fareClass in keys(fareClasses)
 #   ticketsAvailable, ticketsSold, fareClassReward = generativeModel(problem, fareClass, 20, t, policy[fareClass][s])

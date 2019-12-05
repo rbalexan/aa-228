@@ -1,5 +1,5 @@
 function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
-    ticketsAvailable::Int, t::Int, ticketPrice::Real, customersWithoutTicketsByFareClass::Set)
+    ticketsAvailable::Int, t::Int, a::Real, customersWithoutTicketsByFareClass::Set)
 
     # Initialize variables
     ticketsSold = 0   # u
@@ -23,6 +23,7 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
 
         c = customer(wtpThreshold, wtpFlexibility)
         push!(customersWithoutTicketsByFareClass, c)
+
     end
 
     # Check to see which customers will purchase tickets
@@ -32,8 +33,8 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     for c in deepcopy(customersWithoutTicketsByFareClass)
 
         # Compute the purchase probability and sample from its Bernoulli distribution
-        purchaseProbability  = ticketPrice <= c.wtpThreshold ?
-            1 : ccdf(Logistic(c.wtpThreshold, c.wtpFlexibility), ticketPrice) # ϕ value
+        purchaseProbability  = a <= c.wtpThreshold ? 1 :
+                ccdf(Logistic(c.wtpThreshold, c.wtpFlexibility), a) # ϕ value
         purchaseDistribution = Bernoulli(purchaseProbability)
         purchase             = Bool(rand(purchaseDistribution))
 
@@ -46,9 +47,10 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
     end
 
     # Calculate current reward
-    revenue = ticketPrice * ticketsSold
+    revenue = a * ticketsSold
 
     # Return results
-    return ticketsAvailable - ticketsSold, ticketsSold, revenue, newCustomers, customersWithoutTicketsByFareClass, customersWithPurchase
+    return ticketsAvailable - ticketsSold, ticketsSold, revenue, newCustomers,
+                customersWithoutTicketsByFareClass, customersWithPurchase
 
 end
