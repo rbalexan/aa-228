@@ -33,21 +33,19 @@ struct customer
 end
 
 include("generativeModel.jl")
+include("chooseAction.jl")
 include("solveMDP.jl")
 #Random.seed!(1) # for repeatability
 
 # Specify fare classes
 fareClasses = Dict(
-    :business => fareClass(1, 10, 800, 100, 1, 500, collect(760:10:850)),
-    :leisure  => fareClass(5,  2, 400,  50, 1,  10, collect(360:10:450)),
-    :mixed    => fareClass(2,  5, 500,  50, 1,  10, collect(460:10:550))
+    :business => fareClass(1, 10, 700, 100, 1, 500, collect(760:10:850)),
+    :leisure  => fareClass(5,  2, 300,  50, 1,  10, collect(360:10:450)),
+    :mixed    => fareClass(2,  5, 400,  50, 1,  10, collect(460:10:550))
 )
 
 # Initialize the problem and global list of customers
-problem = multiFareDynamicPricingProblem(20, 100, 0.2, 0.9, 0.9, fareClasses)
-
-customersWithoutTickets = Dict(k => Set() for k in keys(fareClasses)) # C
-customersWithTickets    = Dict(k => Set() for k in keys(fareClasses))
+problem = multiFareDynamicPricingProblem(20, 100, 0.2, 0.9, 1, fareClasses)
 
 # Run generativeModel
 # ticketsAvailable, ticketsSold, fareClassReward, customersWithPurchase = generativeModel(problem, :business, 20, 18, 900)
