@@ -23,11 +23,6 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
 
         c = customer(wtpThreshold, wtpFlexibility)
         push!(customersWithoutTicketsByFareClass, c)
-
-        # notix = length(customersWithoutTickets[f])
-        # tix = length(customersWithTickets[f])
-        # @show "New customer", c, notix, tix
-
     end
 
     # Check to see which customers will purchase tickets
@@ -48,12 +43,6 @@ function generativeModel(p::multiFareDynamicPricingProblem, f::Symbol,
             push!(customersWithPurchase, c)
 
         end
-
-        # prob = round(purchaseProbability*100,digits=0)
-        # notix = length(customersWithoutTickets[f])
-        # tix = length(customersWithTickets[f])
-        # @show "Check", c, prob, purchase, notix, tix
-
     end
 
     # Calculate current reward

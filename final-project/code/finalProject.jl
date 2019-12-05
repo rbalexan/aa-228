@@ -23,7 +23,7 @@ struct fareClass
    wtpThresholdStandardDeviation::Real # w_σ
    wtpFlexibilityLowerBound::Real      # k1
    wtpFlexibilityUpperBound::Real      # k2
-   actionSpace::Vector
+   fareActionSpace::Vector
 end
 
 # Define the customer structure
@@ -35,6 +35,7 @@ end
 include("generativeModel.jl")
 include("chooseAction.jl")
 include("solveMDP.jl")
+include("getPolicy.jl")
 #Random.seed!(1) # for repeatability
 
 # Specify fare classes
@@ -45,13 +46,11 @@ fareClasses = Dict(
 )
 
 # Initialize the problem and global list of customers
-problem = multiFareDynamicPricingProblem(20, 100, 0.2, 0.9, 1, fareClasses)
+problem = multiFareDynamicPricingProblem(20, 1000, 0.2, 0.9, 1, fareClasses)
 
-# Run generativeModel
-# ticketsAvailable, ticketsSold, fareClassReward, customersWithPurchase = generativeModel(problem, :business, 20, 18, 900)
-# @show ticketsAvailable, ticketsSold, fareClassReward, customersWithPurchase
-
-solveMDP(problem)
+# Run model to get policy
+policy = getPolicy(problem, 2)
+@show [x for x in policy for x
 
 #for t in 1:30, fareClass in keys(fareClasses)
 #   ticketsAvailable, ticketsSold, fareClassReward = generativeModel(problem, fareClass, 20, t, policy[fareClass][s])
