@@ -33,6 +33,7 @@ struct customer
 end
 
 include("generativeModel.jl")
+include("solveMDP.jl")
 #Random.seed!(1) # for repeatability
 
 # Specify fare classes
@@ -49,10 +50,10 @@ customersWithoutTickets = Dict(k => Set() for k in keys(fareClasses)) # C
 customersWithTickets    = Dict(k => Set() for k in keys(fareClasses))
 
 # Run generativeModel
-ticketsAvailable, ticketsSold, fareClassReward, customersWithPurchase = generativeModel(problem, :business, 20, 18, 900)
+# ticketsAvailable, ticketsSold, fareClassReward, customersWithPurchase = generativeModel(problem, :business, 20, 18, 900)
 # @show ticketsAvailable, ticketsSold, fareClassReward, customersWithPurchase
-setdiff!(customersWithoutTickets[f], customersWithPurchase)
-union!(  customersWithTickets[f],    customersWithPurchase)
+
+solveMDP(problem)
 
 #for t in 1:30, fareClass in keys(fareClasses)
 #   ticketsAvailable, ticketsSold, fareClassReward = generativeModel(problem, fareClass, 20, t, policy[fareClass][s])
