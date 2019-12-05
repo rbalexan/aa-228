@@ -1,17 +1,16 @@
-function getPolicy(p::multiFareDynamicPricingProblem, iterations::Int)
+function getPolicy(p::MultiFareDynamicPricingProblem, iterations::Int)
 
-   stateSpace  = LinearIndices((0:p.totalTickets,1:p.timeHorizon))
-   actionSpace = LinearIndices(zeros([length(p.fareClasses[f].fareActionSpace) for f in keys(p.fareClasses)]...))
-   𝖲 = length(stateSpace)
-   𝖠 = length(actionSpace)
+   # Initialize state and action spaces
+   stateSpace, 𝖲  = stateSpaceAttributes(p)
+   actionSpace, 𝖠 = actionSpaceAttributes(p)
    Q = zeros(𝖲, 𝖠)
 
    for i in 1:iterations
-# need to pass Q into solve MDP for iteration
-      Q, r = solveMDP(p, stateSpace, actionSpace, 𝖲, 𝖠, deepcopy(Q))
+      Q, r = solveMDP(p, deepcopy(Q))
       @show "ITERATION======================================================================", iterations
       @show "Q", sum(Q)
       @show r
+      #! Keep track of rewards
    end
 
    # Extract policy
@@ -19,8 +18,8 @@ function getPolicy(p::multiFareDynamicPricingProblem, iterations::Int)
 
    U             = Q[policyIndices]
    jointPolicy   = [policyIndices[s][2] for s in 1:𝖲]
-   #agentPolicy[f] = ...
-# maybe access each agent's policy
+   #! agentPolicy[f] = ...
+   # maybe access each agent's policy
 
    return jointPolicy, U
 end
