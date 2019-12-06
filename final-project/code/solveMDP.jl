@@ -72,14 +72,15 @@ function solveMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N
         t′ = t + 1 # not used, but nice to make sure :)
         r = sum([a[f]*ticketsSold[f] for f in keys(p.fareClasses)])
         rTotal += r
-        #@show "New state and reward", ticketsAvailable′, t′, r
 
         # Break if time is up or all tickets are sold
         if t == p.timeHorizon || ticketsAvailable′ <= 0
             break
         end
 
-        # Choose next action
+        #@show "New state and reward", ticketsAvailable′, t′, r
+
+                # Choose next action
         sCartesianIndex′    = CartesianIndex(findfirst(x->x==ticketsAvailable′,0:p.totalTickets),findfirst(x->x==t′,1:p.timeHorizon))
         sLinearIndex′       = LinearIndices(stateSpace)[sCartesianIndex′]
         a′, aLinearIndex′   = chooseAction(p, Q, sLinearIndex′)

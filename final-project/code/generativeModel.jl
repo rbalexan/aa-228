@@ -34,7 +34,7 @@ function generativeModel(p::MultiFareDynamicPricingProblem, f::Symbol,
 
         # Compute the purchase probability and sample from its Bernoulli distribution
         purchaseProbability = a[f] <= customer.wtpThreshold ? 1 :
-                ccdf(Logistic(customer.wtpThreshold, customer.wtpFlexibility), a[f]) # ϕ value
+                2*ccdf(Logistic(customer.wtpThreshold, customer.wtpFlexibility), a[f]) # ϕ value
 
         if rand() <= purchaseProbability # the customer wants to buy
             ticketsSold += 1
