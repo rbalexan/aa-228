@@ -44,23 +44,30 @@ include("runEpisodes.jl")
 
 # Specify fare classes
 fareClasses = Dict(
-    :business => FareClass(-1, 30, 700, 100, 20, 20.1, collect(range(550, 850, length=10))),
+    :business => FareClass(-1, 30, 700, 100, 20, 20.1, collect(range(550, 850, length=5))),
     #:leisure  => FareClass(-1, 20, 300,  50, 1,  10, collect(360:20:560)),
     #:mixed    => FareClass(2,  5, 400,  50, 1,  10, collect(460:10:550))
 )
 
 # Initialize the problem and global list of customers
-problem  = MultiFareDynamicPricingProblem(20, 300, 0.2, 0.1, 1, 0.75, fareClasses)
-solver   = :staticLow
-episodes = 500#25000
+problem  = MultiFareDynamicPricingProblem(20, 300, 0.5, 0.5, 1, 0.75, fareClasses)
+solver   = :sarsa
+episodes = 25000
 
 Q, r = runEpisodes(problem, solver, episodes)
 
 # Run model to get policy
 jointPolicy, U, ticketsAvailableSpaceSize = getPolicy(problem, Q)
 
-plot(1:episodes, r)
-#plot()
+plot(1:100:episodes, r[1:100:end])
 heatmap(Q, c=:viridis)
-heatmap(reshape(U, (ticketsAvailableSpaceSize, :)))
-heatmap(reshape(jointPolicy, (ticketsAvailableSpaceSize, :)))
+
+filename = "singleAgentSarsa1"
+heatmap(reshape(U, (ticketsAvailableSpaceSize, :)), framestyle=:box, dpi=600)
+xlabel!("Time"); ylabel!("Tickets Available")
+savefig("code/plots/" * filename * "-U.png")
+
+gr()
+heatmap(reshape(60*jointPolicy.+490, (ticketsAvailableSpaceSize, :)), clims=(490, 850), framestyle=:box, dpi=600, c=:Blues)
+xlabel!("Time"); ylabel!("Tickets Available")
+savefig("code/plots/" * filename * "-π.png")

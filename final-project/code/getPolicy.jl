@@ -8,7 +8,7 @@ function getPolicy(p::MultiFareDynamicPricingProblem, Q::Array)
    policyIndices = argmax(Q, dims=2)
 
    U             = Q[policyIndices]
-   jointPolicy   = [policyIndices[s][2] - 5*( sum(Q[s,:]) == 0 ) for s in 1:𝖲]
+   jointPolicy   = [policyIndices[s][2] - 6*( sum(Q[s,:]) == 0 ) for s in 1:𝖲]
    #! agentPolicy[f] = ...
    # maybe access each agent's policy
 
