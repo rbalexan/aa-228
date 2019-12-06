@@ -1,17 +1,8 @@
-function getPolicy(p::MultiFareDynamicPricingProblem, iterations::Int)
+function getPolicy(p::MultiFareDynamicPricingProblem, Q::Array)
 
-   # Initialize state and action spaces
+   # Initialize state space
    stateSpace, 𝖲  = stateSpaceAttributes(p)
-   actionSpace, 𝖠 = actionSpaceAttributes(p)
-   Q = zeros(𝖲, 𝖠)
-
-   for i in 1:iterations
-      Q, r = solveMDP(p, deepcopy(Q))
-      @show "ITERATION======================================================================", iterations
-      @show "Q", sum(Q)
-      @show r
-      #! Keep track of rewards
-   end
+   actionSpace, _  = actionSpaceAttributes(p)
 
    # Extract policy
    policyIndices = argmax(Q, dims=2)
@@ -22,4 +13,5 @@ function getPolicy(p::MultiFareDynamicPricingProblem, iterations::Int)
    # maybe access each agent's policy
 
    return jointPolicy, U
+
 end

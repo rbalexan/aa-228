@@ -6,7 +6,7 @@ function generativeModel(p::MultiFareDynamicPricingProblem, f::Symbol,
     customersWithoutTicketsByFareClass = customersWithoutTickets[f]
 
     fareClass = p.fareClasses[f]
-    λ = max(0,fareClass.customerArrivalSlope*(p.timeHorizon - t) + fareClass.customerArrivalIntercept)                  # Poisson parameter
+    λ = max(0, fareClass.customerArrivalSlope*t + fareClass.customerArrivalIntercept)                  # Poisson parameter
     customerArrivalDistribution = Poisson(λ)                                                                            # n-distribution
     wtpThresholdDistribution    = Normal( fareClass.wtpThresholdMean,         fareClass.wtpThresholdStandardDeviation)  # w-distribution
     wtpFlexibilityDistribution  = Uniform(fareClass.wtpFlexibilityLowerBound, fareClass.wtpFlexibilityUpperBound)       # k-distribution
@@ -28,7 +28,6 @@ function generativeModel(p::MultiFareDynamicPricingProblem, f::Symbol,
     end
 
     # Check to see which customers will purchase tickets
-
     customersWithPurchase = Set{Customer}()
 
     for customer in deepcopy(customersWithoutTicketsByFareClass)
@@ -41,6 +40,7 @@ function generativeModel(p::MultiFareDynamicPricingProblem, f::Symbol,
             ticketsSold += 1
             push!(customersWithPurchase, customer)
         end
+
     end
 
     # Calculate current reward
@@ -49,4 +49,5 @@ function generativeModel(p::MultiFareDynamicPricingProblem, f::Symbol,
     # Return results
     return ticketsAvailable - ticketsSold, ticketsSold, revenue, newCustomers,
                 customersWithoutTicketsByFareClass, customersWithPurchase
+
 end

@@ -3,7 +3,7 @@ function chooseAction(p::MultiFareDynamicPricingProblem, Q::Array, sLinearIndex:
     # Initialize action space
     actionSpace, 𝖠  = actionSpaceAttributes(p)
 
-    # Choose an action using the ϵ-Greedy algorithm
+    # Choose an action using the ϵ-greedy algorithm
     aLinearIndex    = rand() <= p.ϵ ? rand(1:𝖠) : argmax(Q[sLinearIndex, :])
 
     # Format the action
@@ -12,4 +12,5 @@ function chooseAction(p::MultiFareDynamicPricingProblem, Q::Array, sLinearIndex:
 
     # Return the action and its linear index representation
     return a, aLinearIndex
+
 end
