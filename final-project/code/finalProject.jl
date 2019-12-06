@@ -50,9 +50,9 @@ fareClasses = Dict(
 )
 
 # Initialize the problem and global list of customers
-problem  = MultiFareDynamicPricingProblem(20, 300, 0.5, 0.5, 1, 0.75, fareClasses)
+problem  = MultiFareDynamicPricingProblem(20, 300, 0.2, 0.1, 1, 0.75, fareClasses)
 solver   = :sarsa
-episodes = 25000
+episodes = 250000
 
 Q, r = runEpisodes(problem, solver, episodes)
 
@@ -62,12 +62,11 @@ jointPolicy, U, ticketsAvailableSpaceSize = getPolicy(problem, Q)
 plot(1:100:episodes, r[1:100:end])
 heatmap(Q, c=:viridis)
 
-filename = "singleAgentSarsa1"
+filename = "singleAgentSarsaLR01-250000"
 heatmap(reshape(U, (ticketsAvailableSpaceSize, :)), framestyle=:box, dpi=600)
 xlabel!("Time"); ylabel!("Tickets Available")
 savefig("code/plots/" * filename * "-U.png")
 
-gr()
 heatmap(reshape(60*jointPolicy.+490, (ticketsAvailableSpaceSize, :)), clims=(490, 850), framestyle=:box, dpi=600, c=:Blues)
 xlabel!("Time"); ylabel!("Tickets Available")
 savefig("code/plots/" * filename * "-π.png")
