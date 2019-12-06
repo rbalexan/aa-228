@@ -12,6 +12,7 @@ function getPolicy(p::MultiFareDynamicPricingProblem, Q::Array)
    #! agentPolicy[f] = ...
    # maybe access each agent's policy
 
-   return jointPolicy, U
+   # Return joint policy, value function and size of ticketsAvailable space
+   return jointPolicy, U, p.totalTickets + 1
 
 end

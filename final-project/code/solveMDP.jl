@@ -13,15 +13,14 @@ function solveMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N
     ticketsAvailable = p.totalTickets
     t = 1
     #@show "Start", ticketsAvailable, t
-    sCartesianIndex = CartesianIndex(findfirst(x->x==ticketsAvailable, 0:p.totalTickets), findfirst(x->x==t, 1:p.timeHorizon))
-    sLinearIndex    = LinearIndices(stateSpace)[sCartesianIndex]
+    sLinearIndex = sRawToLinearIndex(p, ticketsAvailable, t)
 
     # Initialize total reward
     rTotal = 0
 
     # Choose action
-    a, aLinearIndex = chooseAction(p, Q, sLinearIndex)
-    #@show "Starting action", a, aLinearIndex
+    a, aLinearIndex = chooseAction(p, Q, sLinearIndex, solver)
+    # @show "Starting action", a, aLinearIndex
 
     # Initialize other fare class-dependent variables
     ticketsSold           = Dict(f => 0     for f in keys(p.fareClasses))
@@ -78,22 +77,18 @@ function solveMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N
             break
         end
 
-        #@show "New state and reward", ticketsAvailable′, t′, r
+        # Choose next action
+        sLinearIndex′     = sRawToLinearIndex(p, ticketsAvailable′, t′)
 
-                # Choose next action
-        sCartesianIndex′    = CartesianIndex(findfirst(x->x==ticketsAvailable′,0:p.totalTickets),findfirst(x->x==t′,1:p.timeHorizon))
-        sLinearIndex′       = LinearIndices(stateSpace)[sCartesianIndex′]
-        a′, aLinearIndex′   = chooseAction(p, Q, sLinearIndex′)
+        # Choose action
+        a′, aLinearIndex′ = chooseAction(p, Q, sLinearIndex′, solver)
         #@show "new action", a′, aLinearIndex′
 
         # Implement the Sarsa update step
-        if solver == :sarsa
-            #@show "SARSA update"
-            #@show "Old value",     Q[sLinearIndex, aLinearIndex]
+        if solver in [:sarsa, :random, :staticLow, :staticHigh]
+
             Q[sLinearIndex,  aLinearIndex] += p.η*(r + p.γ * Q[sLinearIndex′, aLinearIndex′] - Q[sLinearIndex, aLinearIndex])
-            #@show "Primed value",  Q[sLinearIndex′, aLinearIndex′]
-            #@show "Updated value", Q[sLinearIndex, aLinearIndex]
-            #@show size(Q)
+
         elseif solver == :sarsaLambda
 
             N[sLinearIndex, aLinearIndex] += 1
