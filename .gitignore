@@ -1,2 +1,8 @@
-
-.DS_Store
+*.tex
+*.bib
+*.aux
+*.synctex.gz
+*.bib
+*.sty
+*.bst
+*.DS_Store
