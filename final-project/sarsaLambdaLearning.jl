@@ -13,7 +13,7 @@ function sarsaLambdaLearning(𝖲::Int, 𝖠::Int, dataset::DataFrame,
         end
 
         # if we are at the end of an episode, reset the counts for next episode
-        # and skip the last sarsa iteration
+        # and skip the last Sarsa iteration
         if i == size(dataset)[1] || dataset.sp[i] ≠ dataset.s[i+1]
             N = zeros(𝖲, 𝖠)
             continue

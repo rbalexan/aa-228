@@ -5,7 +5,7 @@ function solveMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N
     actionSpace, 𝖠 = actionSpaceAttributes(p)
 
     # Initialize customer lists customersWithoutTickets and customersWithTickets - these are the
-    # 'permanent' lists,as opposed to customersWithPurchase, which is updated at every time step
+    # 'permanent' lists, as opposed to customersWithPurchase, which is updated at every time step
     customersWithoutTickets = Dict(f => Set() for f in keys(fareClasses))
     customersWithTickets    = Dict(f => Set() for f in keys(fareClasses))
 
@@ -77,10 +77,10 @@ function solveMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N
             break
         end
 
-        # Choose next action
+        # Get state
         sLinearIndex′     = sRawToLinearIndex(p, ticketsAvailable′, t′)
 
-        # Choose action
+        # Choose next action
         a′, aLinearIndex′ = chooseAction(p, Q, sLinearIndex′, solver)
         #@show "new action", a′, aLinearIndex′
 

@@ -33,17 +33,19 @@ struct Customer
      wtpFlexibility::Real # k
 end
 
-include("spaceAndActionFunctions.jl")
-include("generativeModel.jl")
-include("chooseAction.jl")
-include("solveMDP.jl")
-include("getPolicy.jl")
-include("runEpisodes.jl")
+include("spaceAndActionFunctions.jl")  # A library of functions to transform state and action representations
+include("generativeModel.jl")          # Generative model to simulate customer demand dynamics
+include("chooseAction.jl")             # Logic to choose the next action based on ϵ-greedy or other policies
+include("solveMDP.jl")                 # Run the dynamic program for the MDP
+include("getPolicy.jl")                # Extract the policy from the Q function
+include("runEpisodes.jl")              # Solve for the optimal policy over the specified number of episodes
 
 #Random.seed!(1) # for repeatability
 
+# *** Run algorithms here (example below) ***
+
 # Specify fare classes
-# single agent
+# Single-segment
 fareClasses = Dict(
     :business => FareClass(-1, 30, 700, 100, 20, 20.1, collect(range(550, 850, length=5))),
     #:leisure  => FareClass(-1, 20, 300,  50, 10, 10.1, collect(range(225, 375, length=5))),
@@ -69,8 +71,7 @@ heatmap(reshape(75*jointPolicy.+475, (ticketsAvailableSpaceSize, :)), clims=(550
 xlabel!("Time"); ylabel!("Tickets Available")
 savefig("code/plots/" * filename * "-policy.png")
 
-
-# two agents
+# Multi-segment (two fare classes)
 fareClasses = Dict(
     :business => FareClass(-1, 30, 700, 100, 20, 20.1, collect(range(550, 850, length=5))),
     :leisure  => FareClass(-1, 20, 300,  50, 10, 10.1, collect(range(225, 375, length=5))),
