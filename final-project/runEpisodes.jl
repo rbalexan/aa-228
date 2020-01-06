@@ -14,7 +14,7 @@ function runEpisodes(p::MultiFareDynamicPricingProblem, solver::Symbol, episodes
       #Random.seed!(1) # for repeatability
 
       N = zeros(𝖲, 𝖠)
-      Q, r[episode] = solveMDP(problem, solver, Q, N)
+      Q, r[episode] = solveMMDP(problem, solver, Q, N)
       #@show "EPISODE======================================================================", episode
       #@show "Q", sum(Q)
       if mod(episode, 100) == 0

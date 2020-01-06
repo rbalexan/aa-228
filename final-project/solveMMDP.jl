@@ -1,4 +1,4 @@
-function solveMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N::Array)
+function solveMMDP(p::MultiFareDynamicPricingProblem, solver::Symbol, Q::Array, N::Array)
 
     # Initialize state and action spaces
     stateSpace,  𝖲  = stateSpaceAttributes(p)

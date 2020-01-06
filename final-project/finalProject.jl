@@ -36,7 +36,7 @@ end
 include("spaceAndActionFunctions.jl")  # A library of functions to transform state and action representations
 include("generativeModel.jl")          # Generative model to simulate customer demand dynamics
 include("chooseAction.jl")             # Logic to choose the next action based on ϵ-greedy or other policies
-include("solveMDP.jl")                 # Run the dynamic program for the MDP
+include("solveMMDP.jl")                # Run the dynamic program for the MMDP
 include("getPolicy.jl")                # Extract the policy from the Q function
 include("runEpisodes.jl")              # Solve for the optimal policy over the specified number of episodes
 
